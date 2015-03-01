@@ -1,0 +1,32 @@
+﻿<Page
+    x:Class="DeliveryIngesup.Views.Panier"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    DataContext="{Binding MainViewModel, Mode=TwoWay}">
+
+    <Page.Resources>
+        <DataTemplate x:Key="ArticleTemplate">
+            <Grid>
+                <StackPanel Margin="5">
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Nom}"/>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Prix}"/>
+                    <Button Content="Ajouter au panier" HorizontalAlignment="Right"/>
+                    <Line StrokeThickness="2" Fill="White" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+            <ListView ItemTemplate="{StaticResource ArticleTemplate}" ItemsSource="{Binding ListeProduit, Mode=TwoWay}" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Retour" />
+                <Button Content="Valider" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>
