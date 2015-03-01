@@ -111,7 +111,11 @@
     <Compile Include="Manager\DeliveryManager.cs" />
     <Compile Include="Manager\IDeliveryManager.cs" />
     <Compile Include="Manager\MockDeliveryManager.cs" />
+    <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Models\Commande.cs" />
+    <Compile Include="Models\CommandeProduit.cs" />
+    <Compile Include="Models\Livreur.cs" />
+    <Compile Include="Models\LivreurCommande.cs" />
     <Compile Include="Models\Produit.cs" />
     <Compile Include="Models\Utilisateur.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

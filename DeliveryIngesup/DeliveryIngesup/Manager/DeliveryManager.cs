@@ -59,7 +59,7 @@ namespace DeliveryIngesup.Manager
             try
             {
                 var con = new SQLiteAsyncConnection("deliveryLocal.bdd");
-                con.InsertAsync(new Commande {Utilisateur = email, Produit = produit, Horaire = horaire});
+                //con.InsertAsync(new Commande {CurrentUser = email, Produit = produit, Horaire = horaire});
             }
             catch (Exception)
             {
