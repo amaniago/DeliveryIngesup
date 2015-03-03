@@ -43,6 +43,7 @@ namespace DeliveryIngesup.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<InscriptionViewModel>();
         }
 
         public MainViewModel Main
@@ -50,6 +51,14 @@ namespace DeliveryIngesup.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+
+        public InscriptionViewModel Inscription
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<InscriptionViewModel>();
             }
         }
         

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
@@ -50,12 +51,26 @@ namespace DeliveryIngesup.Manager
             }
         }
 
-        private Utilisateur Inscription(Utilisateur nouvelUtilisateur)
+        public Utilisateur Inscription(Utilisateur nouvelUtilisateur)
         {
-            return nouvelUtilisateur;
+            try
+            {
+                var connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
+
+                int x = 0;
+                if(connection.Table<Utilisateur>().ToListAsync().Result.All(u => u.Email != nouvelUtilisateur.Email))
+                    x = connection.InsertAsync(nouvelUtilisateur).Result;
+
+                return x > 0 ? connection.Table<Utilisateur>().Where(u => u.Email == nouvelUtilisateur.Email).FirstAsync().Result : new Utilisateur();
+            }
+            catch (Exception)
+            {
+                return new Utilisateur();
+            }
+            
         }
 
-        public static string ComputeMd5(string str)
+        private static string ComputeMd5(string str)
         {
             var alg = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
             IBuffer buff = CryptographicBuffer.ConvertStringToBinary(str, BinaryStringEncoding.Utf8);
