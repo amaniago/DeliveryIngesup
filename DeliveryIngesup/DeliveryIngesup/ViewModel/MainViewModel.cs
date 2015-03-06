@@ -68,12 +68,12 @@ namespace DeliveryIngesup.ViewModel
 
         private void Connexion()
         {
+            //TODO : Check si tous les champs sont remplis
             CurrentUser = UserManager.Instance.Connexion(CurrentUser.Email, CurrentUser.Password);
             if (CurrentUser != null)
             {
-                //TODO : Navigation vers commande
-                int x = 0;
-                //_navigationService.NavigateTo("Commande");
+                MessengerInstance.Send(CurrentUser);
+                _navigationService.NavigateTo("Commande");
             }
             else
             {

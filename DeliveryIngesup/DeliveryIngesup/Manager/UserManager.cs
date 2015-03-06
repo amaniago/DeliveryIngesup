@@ -8,7 +8,7 @@ using SQLite;
 
 namespace DeliveryIngesup.Manager
 {
-    public class UserManager
+    public class UserManager : IUserManager
     {
         private static UserManager _instance;
 

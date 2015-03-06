@@ -5,22 +5,38 @@ using SQLite;
 
 namespace DeliveryIngesup.Manager
 {
-    class DeliveryManager : IDeliveryManager
+    public class DeliveryManager : IDeliveryManager
     {
-        public async void Initialiser()
+        private static DeliveryManager _instance;
+
+        private DeliveryManager() { }
+
+        public static DeliveryManager Instance
         {
-            var connection = new SQLiteAsyncConnection("deliveryLocal.bdd");
+            get { return _instance ?? (_instance = new DeliveryManager()); }
+        }
+
+        public async void Initialisation()
+        {
+            var connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
+            //await connection.DropTableAsync<Produit>();
             await connection.CreateTableAsync<Produit>();
             await connection.CreateTableAsync<Commande>();
             await connection.CreateTableAsync<Utilisateur>();
+            await connection.CreateTableAsync<CommandeProduit>();
+
+            //await connection.InsertAsync(new Produit() {Nom = "Fraise", Prix = 10});
+            //await connection.InsertAsync(new Produit() {Nom = "Cerise", Prix = 15});
+            //await connection.InsertAsync(new Produit() {Nom = "Poire", Prix = 5});
+            //await connection.InsertAsync(new Produit() {Nom = "Pomme", Prix = 7});
         }
 
-        public ObservableCollection<Produit> GetAllProduit()
+        public ObservableCollection<Produit> GetProduits()
         {
             try
             {
-                var con = new SQLiteAsyncConnection("deliveryLocal.bdd");
-                return new ObservableCollection<Produit>(con.Table<Produit>().ToListAsync().Result);
+                var connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
+                return new ObservableCollection<Produit>(connection.Table<Produit>().ToListAsync().Result);
             }
             catch (Exception)
             {
@@ -28,12 +44,13 @@ namespace DeliveryIngesup.Manager
             }
         }
 
-        public void AddUser(Utilisateur user)
+        public Produit GetProduit(int id)
         {
             try
             {
-                var con = new SQLiteAsyncConnection("deliveryLocal.bdd");
-                con.InsertAsync(user);
+                var connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
+
+                return connection.Table<Produit>().Where(p => p.IdProduit == id).FirstAsync().Result;
             }
             catch (Exception)
             {
@@ -41,24 +58,11 @@ namespace DeliveryIngesup.Manager
             }
         }
 
-        public bool CheckUser(string email, string mdp)
+        public void CreerCommande(string email, string produit, string horaire)
         {
             try
             {
-                var con = new SQLiteAsyncConnection("deliveryLocal.bdd");
-                return con.Table<Utilisateur>().Where(u => u.Email == email && u.Password == mdp).ToListAsync().Result.Count == 1;
-            }
-            catch (Exception)
-            {
-                throw new Exception("La connexion à la base de données n'a pas pu être établie.");
-            }
-        }
-
-        public void AddCommand(string email, string produit, string horaire)
-        {
-            try
-            {
-                var con = new SQLiteAsyncConnection("deliveryLocal.bdd");
+                var connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
                 //con.InsertAsync(new Commande {CurrentUser = email, Produit = produit, Horaire = horaire});
             }
             catch (Exception)
