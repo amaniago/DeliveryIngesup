@@ -55,6 +55,8 @@ namespace DeliveryIngesup.Manager
         {
             try
             {
+                //TODO : Check password
+                nouvelUtilisateur.Password = ComputeMd5(nouvelUtilisateur.Password);
                 var connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
 
                 int x = 0;
