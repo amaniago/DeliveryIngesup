@@ -1,15 +1,16 @@
-﻿using SQLite;
+﻿using System;
+using SQLite;
 using SQLiteNetExtensions.Attributes;
 
 namespace DeliveryIngesup.Models
 {
     public class Commande
     {
+        [PrimaryKey, NotNull, AutoIncrement]
+        public int IdCommande { get; set; }
         [ForeignKey(typeof(Utilisateur))]
         public string Utilisateur { get; set; }
-        [ForeignKey(typeof(Produit))]
-        public string Produit { get; set; }
         [Column("horaire"), NotNull]
-        public string Horaire { get; set; }
+        public DateTime Horaire { get; set; }
     }
 }

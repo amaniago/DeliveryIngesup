@@ -2,7 +2,7 @@
 
 namespace DeliveryIngesup.Models
 {
-    class Utilisateur
+    public class Utilisateur
     {
         [PrimaryKey, Column("email"), NotNull]
         public string Email { get; set; }
