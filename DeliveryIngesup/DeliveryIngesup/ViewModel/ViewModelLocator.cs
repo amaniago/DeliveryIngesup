@@ -12,8 +12,10 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using DeliveryIngesup.Views;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
 
 namespace DeliveryIngesup.ViewModel
@@ -41,6 +43,8 @@ namespace DeliveryIngesup.ViewModel
             ////    // Create run time view services and models
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
+            INavigationService navigationService = CreateNavigationService();
+            SimpleIoc.Default.Register<INavigationService>(() => navigationService);
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<InscriptionViewModel>();
@@ -66,5 +70,16 @@ namespace DeliveryIngesup.ViewModel
         {
             // TODO Clear the ViewModels
         }
+
+        INavigationService CreateNavigationService()
+        {
+            var navigationService = new NavigationService();
+            navigationService.Configure("Main", typeof(MainPage));
+            navigationService.Configure("Inscription", typeof(Inscription));
+            navigationService.Configure("Panier", typeof(Panier));
+
+            return navigationService;
+        }
+
     }
 }

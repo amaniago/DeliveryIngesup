@@ -1,8 +1,10 @@
 using System.Windows.Input;
+using System.Xml.Linq;
 using DeliveryIngesup.Manager;
 using DeliveryIngesup.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 
 namespace DeliveryIngesup.ViewModel
 {
@@ -54,8 +56,10 @@ namespace DeliveryIngesup.ViewModel
         public ICommand InscriptionCommand { get; set; }
         #endregion
 
-        public MainViewModel()
+        private readonly INavigationService _navigationService;
+        public MainViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
             UserManager.Instance.Initialisation();
             CurrentUser = new Utilisateur();
             ConnexionCommand = new RelayCommand(Connexion);
@@ -68,6 +72,8 @@ namespace DeliveryIngesup.ViewModel
             if (CurrentUser != null)
             {
                 //TODO : Navigation vers commande
+                int x = 0;
+                //_navigationService.NavigateTo("Commande");
             }
             else
             {
@@ -76,10 +82,10 @@ namespace DeliveryIngesup.ViewModel
             }
 
         }
-
+        
         private void Inscription()
         {
-            //TODO : Navigation vers inscription
+            _navigationService.NavigateTo("Inscription");
         }
 
     }

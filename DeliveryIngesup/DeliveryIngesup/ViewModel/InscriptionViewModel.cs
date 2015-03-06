@@ -3,6 +3,7 @@ using DeliveryIngesup.Manager;
 using DeliveryIngesup.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 
 namespace DeliveryIngesup.ViewModel
 {
@@ -39,20 +40,19 @@ namespace DeliveryIngesup.ViewModel
         public ICommand InscriptionCommand { get; set; }
         #endregion
 
-        public InscriptionViewModel()
+        private readonly INavigationService _navigationService;
+
+        public InscriptionViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
             NouvelUtilisateur = new Utilisateur();
             InscriptionCommand = new RelayCommand(Inscription);
         }
 
         private void Inscription()
         {
-            if(NouvelUtilisateur.Password == CheckPassword)
-                NouvelUtilisateur = UserManager.Instance.Inscription(NouvelUtilisateur);
-            else
-            {
-                //TODO : Message d'erreur
-            }
+            NouvelUtilisateur = UserManager.Instance.Inscription(NouvelUtilisateur, CheckPassword);
+            _navigationService.NavigateTo("Main");             
         }
     }
 }

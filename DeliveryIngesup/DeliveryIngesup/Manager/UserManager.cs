@@ -51,7 +51,7 @@ namespace DeliveryIngesup.Manager
             }
         }
 
-        public Utilisateur Inscription(Utilisateur nouvelUtilisateur)
+        public Utilisateur Inscription(Utilisateur nouvelUtilisateur, string checkPassword)
         {
             try
             {
