@@ -2,12 +2,63 @@
     x:Class="DeliveryIngesup.Views.Commande"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:DeliveryIngesup.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    DataContext="{Binding Commande, Source={StaticResource Locator}}">
+    <Page.Resources>
+        <DataTemplate x:Key="ProduitTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Margin="5">
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" FontWeight="Bold">
+                        <Run Text="{Binding Nom}"></Run>
+                        <Run Text=" - "></Run>
+                        <Run Text="{Binding Prix}"></Run>
+                        <Run Text="€"></Run>
+                    </TextBlock>
+                    <Grid>
+                        <StackPanel HorizontalAlignment="Left"  Orientation="Horizontal">
+                            <HyperlinkButton Content="Ajouter au panier" FontSize="16" Foreground="#FF47CDFF" Margin="5, 0, 0, 0" Command="{Binding Commande.AjouterProduitCommand, Mode=TwoWay, Source={StaticResource Locator}}" CommandParameter="{Binding IdProduit}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
 
+        <DataTemplate x:Key="PanierTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Margin="5">
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" FontWeight="Bold">
+                        <Run Text="{Binding Nom}"></Run>
+                        <Run Text=" - "></Run>
+                        <Run Text="{Binding Prix}"></Run>
+                        <Run Text="€"></Run>
+                    </TextBlock>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" FontWeight="Bold">
+                        <Run Text="Quantité : "></Run>
+                        <Run Text="{Binding Quantite}"></Run>
+                    </TextBlock>
+                    <Grid>
+                        <StackPanel HorizontalAlignment="Left"  Orientation="Horizontal">
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <ListView ItemTemplate="{StaticResource ProduitTemplate}" HorizontalAlignment="Left" Height="748" Margin="10,10,0,0" VerticalAlignment="Top" Width="1068" ItemsSource="{Binding ListeProduits, Mode=TwoWay}">
+        </ListView>
+        <ListView ItemTemplate="{StaticResource PanierTemplate}" HorizontalAlignment="Left" Height="748" Margin="1086,10,0,0" VerticalAlignment="Top" Width="270" ItemsSource="{Binding Panier, Mode=TwoWay}">
+        </ListView>
+        <Button Content="Valider la commande" Command="{Binding ValiderPanierCommand}"></Button>
     </Grid>
 </Page>

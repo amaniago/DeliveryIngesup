@@ -4,11 +4,13 @@ namespace DeliveryIngesup.Models
 {
     public class Produit
     {
-        [PrimaryKey, NotNull]
+        [Column("idproduit"), AutoIncrement, PrimaryKey, NotNull]
         public int IdProduit { get; set; }
-        [NotNull]
+        [Column("nom"),  NotNull]
         public string Nom { get; set; }
-        [NotNull]
-        public string Prix { get; set; }
+        [Column("prix"), NotNull]
+        public int Prix { get; set; }
+
+        public int Quantite { get; set; }
     }
 }

@@ -48,6 +48,7 @@ namespace DeliveryIngesup.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<InscriptionViewModel>();
+            SimpleIoc.Default.Register<CommandeViewModel>();
         }
 
         public MainViewModel Main
@@ -65,6 +66,14 @@ namespace DeliveryIngesup.ViewModel
                 return ServiceLocator.Current.GetInstance<InscriptionViewModel>();
             }
         }
+
+        public CommandeViewModel Commande
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<CommandeViewModel>();
+            }
+        }
         
         public static void Cleanup()
         {
@@ -76,7 +85,7 @@ namespace DeliveryIngesup.ViewModel
             var navigationService = new NavigationService();
             navigationService.Configure("Main", typeof(MainPage));
             navigationService.Configure("Inscription", typeof(Inscription));
-            navigationService.Configure("Panier", typeof(Panier));
+            navigationService.Configure("Commande", typeof(Commande));
 
             return navigationService;
         }
