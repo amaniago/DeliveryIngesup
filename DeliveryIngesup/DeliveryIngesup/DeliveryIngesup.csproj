@@ -126,12 +126,16 @@
     <Compile Include="ViewModel\CommandeViewModel.cs" />
     <Compile Include="ViewModel\InscriptionViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\PaiementViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\Commande.xaml.cs">
       <DependentUpon>Commande.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Inscription.xaml.cs">
       <DependentUpon>Inscription.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Paiement.xaml.cs">
+      <DependentUpon>Paiement.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Panier.xaml.cs">
       <DependentUpon>Panier.xaml</DependentUpon>
@@ -164,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Inscription.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Paiement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,30 +12,6 @@ namespace DeliveryIngesup.ViewModel
     public class MainViewModel : ViewModelBase
     {
         #region Properties
-        //private string _login;
-
-        //public string Login
-        //{
-        //    get { return _login; }
-        //    set
-        //    {
-        //        _login = value;
-        //        RaisePropertyChanged();
-        //    }
-        //}
-
-        //private string _password;
-
-        //public string Password
-        //{
-        //    get { return _password; }
-        //    set
-        //    {
-        //        _password = value;
-        //        RaisePropertyChanged();
-        //    }
-        //}
-
         private Utilisateur _currentUser;
 
         public Utilisateur CurrentUser

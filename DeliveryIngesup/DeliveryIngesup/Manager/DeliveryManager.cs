@@ -58,12 +58,20 @@ namespace DeliveryIngesup.Manager
             }
         }
 
-        public void CreerCommande(string email, string produit, string horaire)
+        public void CreerCommande(Utilisateur currentUser, ObservableCollection<Produit> panier)
         {
             try
             {
                 var connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
-                //con.InsertAsync(new Commande {CurrentUser = email, Produit = produit, Horaire = horaire});
+                connection.InsertAsync(new Commande () {Horaire = DateTime.Now, Utilisateur = currentUser.Email});
+                var commande = connection.Table<Commande>()
+                    .Where(c => c.Utilisateur == currentUser.Email)
+                    .OrderByDescending(c => c.Horaire).FirstAsync();
+
+                foreach (var produit in panier)
+                {
+                    connection.InsertAsync(new CommandeProduit() {Commande = commande.Id, Produit = produit.IdProduit});
+                }
             }
             catch (Exception)
             {

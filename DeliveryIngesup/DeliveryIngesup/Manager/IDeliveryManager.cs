@@ -6,6 +6,7 @@ namespace DeliveryIngesup.Manager
     interface IDeliveryManager
     {
         ObservableCollection<Produit> GetProduits();
-        void CreerCommande(string email, string produit, string horaire);
+        Produit GetProduit(int id);
+        void CreerCommande(Utilisateur currentUser, ObservableCollection<Produit> panier);
     }
 }

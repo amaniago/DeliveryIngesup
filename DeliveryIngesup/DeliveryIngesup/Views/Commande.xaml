@@ -21,9 +21,7 @@
                         <Run Text="€"></Run>
                     </TextBlock>
                     <Grid>
-                        <StackPanel HorizontalAlignment="Left"  Orientation="Horizontal">
-                            <HyperlinkButton Content="Ajouter au panier" FontSize="16" Foreground="#FF47CDFF" Margin="5, 0, 0, 0" Command="{Binding Commande.AjouterProduitCommand, Mode=TwoWay, Source={StaticResource Locator}}" CommandParameter="{Binding IdProduit}"/>
-                        </StackPanel>
+                        <HyperlinkButton Content="Ajouter au panier" FontSize="16" Foreground="#FF47CDFF" Margin="5, 0, 0, 0" Command="{Binding Commande.AjouterProduitCommand, Mode=TwoWay, Source={StaticResource Locator}}" CommandParameter="{Binding IdProduit}"/>
                     </Grid>
                 </StackPanel>
             </Grid>
@@ -47,8 +45,7 @@
                         <Run Text="{Binding Quantite}"></Run>
                     </TextBlock>
                     <Grid>
-                        <StackPanel HorizontalAlignment="Left"  Orientation="Horizontal">
-                        </StackPanel>
+                        <HyperlinkButton Content="Supprimer" FontSize="16" Foreground="#FF47CDFF" Margin="5, 0, 0, 0" Command="{Binding Commande.SupprimerProduitCommand, Mode=TwoWay, Source={StaticResource Locator}}" CommandParameter="{Binding IdProduit}"/>
                     </Grid>
                 </StackPanel>
             </Grid>
@@ -57,8 +54,8 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ListView ItemTemplate="{StaticResource ProduitTemplate}" HorizontalAlignment="Left" Height="748" Margin="10,10,0,0" VerticalAlignment="Top" Width="1068" ItemsSource="{Binding ListeProduits, Mode=TwoWay}">
         </ListView>
-        <ListView ItemTemplate="{StaticResource PanierTemplate}" HorizontalAlignment="Left" Height="748" Margin="1086,10,0,0" VerticalAlignment="Top" Width="270" ItemsSource="{Binding Panier, Mode=TwoWay}">
+        <ListView ItemTemplate="{StaticResource PanierTemplate}" HorizontalAlignment="Left" Height="335" Margin="1086,10,0,0" VerticalAlignment="Top" Width="270" ItemsSource="{Binding Panier, Mode=TwoWay}">
         </ListView>
-        <Button Content="Valider la commande" Command="{Binding ValiderPanierCommand}"></Button>
+        <Button Content="Valider la commande" Command="{Binding ValiderPanierCommand}" Margin="1176,347,0,383"></Button>
     </Grid>
 </Page>

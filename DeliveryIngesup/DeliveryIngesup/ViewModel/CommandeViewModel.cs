@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows.Input;
@@ -7,6 +8,7 @@ using DeliveryIngesup.Manager;
 using DeliveryIngesup.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 
 namespace DeliveryIngesup.ViewModel
 {
@@ -58,35 +60,61 @@ namespace DeliveryIngesup.ViewModel
         public ICommand ValiderPanierCommand { get; set; }
         #endregion
 
-        public CommandeViewModel()
+        private readonly INavigationService _navigationService;
+        public CommandeViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
             MessengerInstance.Register<Utilisateur>(this, user => CurrentUser = user);
             DeliveryManager.Instance.Initialisation();
             ListeProduits = DeliveryManager.Instance.GetProduits();
             AjouterProduitCommand = new RelayCommand<int>(param => AjouterArticle(DeliveryManager.Instance.GetProduit(param)));
+            SupprimerProduitCommand = new RelayCommand<int>(param => SupprimerArticle(DeliveryManager.Instance.GetProduit(param)));
             Panier = new ObservableCollection<Produit>();
             ValiderPanierCommand = new RelayCommand(ValiderPanier);
         }
 
         private void AjouterArticle(Produit produit)
         {
-            Produit produitExistant = Panier.FirstOrDefault(p => p.IdProduit == produit.IdProduit);
+            var panierTemp = Panier;
+
+            Produit produitExistant = panierTemp.FirstOrDefault(p => p.IdProduit == produit.IdProduit);
 
             if (produitExistant == null)
             {
                 produit.Quantite ++;
-                Panier.Add(produit);
+                panierTemp.Add(produit);
             }
             else
             {
                 produitExistant.Quantite++;
-                //TODO : Notifier la collection
+            }
+
+            Panier = new ObservableCollection<Produit>(panierTemp);
+        }
+
+        private void SupprimerArticle(Produit produit)
+        {
+            try
+            {
+                Panier.Remove(Panier.FirstOrDefault(p => p.IdProduit == produit.IdProduit));
+            }
+            catch (Exception)
+            {
+                // ignored
             }
         }
 
         private void ValiderPanier()
         {
-            
+            if (Panier.Count > 0)
+            {
+                MessengerInstance.Send(Panier);
+                _navigationService.NavigateTo("Paiement");
+            }
+            else
+            {
+                //TODO : Message d'erreur
+            }
         }
     }
 }
