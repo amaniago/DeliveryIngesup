@@ -5,8 +5,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Manager;
 using DAL.Models;
-using DeliveryIngesup.Manager;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using SQLite;
 

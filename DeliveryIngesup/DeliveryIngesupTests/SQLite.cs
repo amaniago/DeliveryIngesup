@@ -2814,15 +2814,8 @@ namespace SQLite
 
 		public T First ()
 		{
-		    try
-		    {
-                var query = Take(1);
-                return query.ToList<T>().First();
-		    }
-		    catch
-		    {
-		        return default(T);
-		    }
+			var query = Take (1);
+			return query.ToList<T>().First ();
 		}
 
 		public T FirstOrDefault ()

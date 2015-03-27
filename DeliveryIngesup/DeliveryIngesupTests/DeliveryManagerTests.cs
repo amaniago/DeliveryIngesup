@@ -5,8 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Manager;
 using DAL.Models;
-using DeliveryIngesup.Manager;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using SQLite;
 
@@ -24,6 +24,11 @@ namespace DeliveryIngesupTests
         public static async Task Initialize(TestContext context)
         {
             _connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
+
+            await _connection.CreateTableAsync<Utilisateur>();
+            await _connection.CreateTableAsync<Produit>();
+            await _connection.CreateTableAsync<Commande>();
+
             _produit = new Produit{IdProduit = 999999, Nom = "Produit", Prix = 10, Quantite = 100};
             _commande = new Commande {Horaire = DateTime.Now, IdCommande = 999999, Utilisateur = "mail@mail.com"};
             _utilisateur = new Utilisateur {Email = "mail@mail.com", Nom = "Nom", Prenom = "Prenom", Password = ""};

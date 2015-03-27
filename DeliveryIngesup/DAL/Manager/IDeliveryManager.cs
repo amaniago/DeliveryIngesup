@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using DAL.Models;
 
-namespace DeliveryIngesup.Manager
+namespace DAL.Manager
 {
     interface IDeliveryManager
     {

@@ -1,6 +1,6 @@
 ﻿using DAL.Models;
 
-namespace DeliveryIngesup.Manager
+namespace DAL.Manager
 {
     public interface IUserManager
     {

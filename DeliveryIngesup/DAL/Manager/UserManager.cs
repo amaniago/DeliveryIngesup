@@ -6,7 +6,7 @@ using Windows.Storage.Streams;
 using DAL.Models;
 using SQLite;
 
-namespace DeliveryIngesup.Manager
+namespace DAL.Manager
 {
     public class UserManager : IUserManager
     {

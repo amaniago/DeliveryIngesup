@@ -103,6 +103,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Manager\DeliveryManager.cs" />
+    <Compile Include="Manager\IDeliveryManager.cs" />
+    <Compile Include="Manager\IUserManager.cs" />
+    <Compile Include="Manager\UserManager.cs" />
     <Compile Include="Models\Commande.cs" />
     <Compile Include="Models\CommandeProduit.cs" />
     <Compile Include="Models\Livreur.cs" />
@@ -110,6 +114,8 @@
     <Compile Include="Models\Produit.cs" />
     <Compile Include="Models\Utilisateur.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLite.cs" />
+    <Compile Include="SQLiteAsync.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
