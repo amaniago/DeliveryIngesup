@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
+using DAL.Models;
 using DeliveryIngesup.Manager;
-using DeliveryIngesup.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 

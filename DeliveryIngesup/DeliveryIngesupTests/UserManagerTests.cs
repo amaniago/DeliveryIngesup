@@ -5,8 +5,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Models;
 using DeliveryIngesup.Manager;
-using DeliveryIngesup.Models;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using SQLite;
 
@@ -37,7 +37,6 @@ namespace DeliveryIngesupTests
         {
             await _connection.DeleteAsync(_utilisateur);
         }
-
 
         [TestMethod]
         public async Task TestConnexion()

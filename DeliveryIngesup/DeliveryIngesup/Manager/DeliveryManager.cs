@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using DeliveryIngesup.Models;
+using DAL.Models;
 using SQLite;
 
 namespace DeliveryIngesup.Manager

@@ -1,8 +1,7 @@
-﻿using SQLite;
-using SQLite.Net;
+﻿using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
-namespace DeliveryIngesup.Models
+namespace DAL.Models
 {
     public class CommandeProduit
     {

@@ -1,6 +1,6 @@
-﻿using SQLite;
+﻿using SQLite.Net.Attributes;
 
-namespace DeliveryIngesup.Models
+namespace DAL.Models
 {
     public class Livreur
     {

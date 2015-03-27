@@ -114,12 +114,6 @@
     <Compile Include="Manager\IDeliveryManager.cs" />
     <Compile Include="Manager\IUserManager.cs" />
     <Compile Include="Manager\UserManager.cs" />
-    <Compile Include="Models\Commande.cs" />
-    <Compile Include="Models\CommandeProduit.cs" />
-    <Compile Include="Models\Livreur.cs" />
-    <Compile Include="Models\LivreurCommande.cs" />
-    <Compile Include="Models\Produit.cs" />
-    <Compile Include="Models\Utilisateur.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
@@ -211,7 +205,12 @@
       <Name>SQLite for Windows Runtime %28Windows 8.1%29</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{F6F4EA1E-C06B-46F4-A689-69B1D3A92844}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>

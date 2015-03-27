@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using DeliveryIngesup.Models;
+using DAL.Models;
 
 namespace DeliveryIngesup.Manager
 {

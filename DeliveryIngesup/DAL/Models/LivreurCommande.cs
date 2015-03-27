@@ -1,6 +1,6 @@
 ﻿using SQLiteNetExtensions.Attributes;
 
-namespace DeliveryIngesup.Models
+namespace DAL.Models
 {
     class LivreurCommande
     {
