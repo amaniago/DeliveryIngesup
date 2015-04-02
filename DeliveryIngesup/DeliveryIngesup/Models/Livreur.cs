@@ -6,7 +6,9 @@ namespace DeliveryIngesup.Models
     {
         [PrimaryKey, Column("idlivreur")]
         public int IdLivreur { get; set; }
-        [PrimaryKey, Column("nom")]
+        [Column("nom"), NotNull]
         public string Nom { get; set; }
+        [Column("password")]
+        public string Password { get; set; }
     }
 }

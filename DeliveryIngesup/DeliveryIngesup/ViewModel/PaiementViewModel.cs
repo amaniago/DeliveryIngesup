@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using DeliveryIngesup.Manager;
 using DeliveryIngesup.Models;
@@ -33,6 +34,55 @@ namespace DeliveryIngesup.ViewModel
                 RaisePropertyChanged();
             }
         }
+
+        private string _numeroCarte;
+
+        public string NumeroCarte
+        {
+            get { return _numeroCarte; }
+            set
+            {
+                _numeroCarte = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string _adresse;
+
+        public string Adresse
+        {
+            get { return _adresse; }
+            set
+            {
+                _adresse = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string _codePostal;
+
+        public string CodePostal
+        {
+            get { return _codePostal; }
+            set
+            {
+                _codePostal = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string _ville;
+
+        public string Ville
+        {
+            get { return _ville; }
+            set
+            {
+                _ville = value;
+                RaisePropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -48,9 +98,15 @@ namespace DeliveryIngesup.ViewModel
 
         private void Paiement()
         {
-            //TODO : Paiement avec Paypal
-
-            DeliveryManager.Instance.CreerCommande(CurrentUser, Panier);
+            if (PaiementManager.IsValidCardNumber(NumeroCarte))
+            {
+                DeliveryManager.Instance.CreerCommande(CurrentUser, Panier, Adresse, CodePostal, Ville);
+                //TODO : Message de fin + retour accueil
+            }
+            else
+            {
+                //TODO : Erreur
+            }
         }
     }
 }

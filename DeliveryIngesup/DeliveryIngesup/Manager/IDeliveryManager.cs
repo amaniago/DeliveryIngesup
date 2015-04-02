@@ -7,6 +7,6 @@ namespace DeliveryIngesup.Manager
     {
         ObservableCollection<Produit> GetProduits();
         Produit GetProduit(int id);
-        void CreerCommande(Utilisateur currentUser, ObservableCollection<Produit> panier);
+        void CreerCommande(Utilisateur currentUser, ObservableCollection<Produit> panier, string adresse, string codePostal, string ville);
     }
 }

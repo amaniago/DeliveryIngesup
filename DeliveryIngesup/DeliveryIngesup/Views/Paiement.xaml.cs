@@ -26,5 +26,6 @@ namespace DeliveryIngesup.Views
         {
             this.InitializeComponent();
         }
+
     }
 }

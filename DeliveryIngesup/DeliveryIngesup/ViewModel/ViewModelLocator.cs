@@ -50,6 +50,7 @@ namespace DeliveryIngesup.ViewModel
             SimpleIoc.Default.Register<InscriptionViewModel>(true);
             SimpleIoc.Default.Register<CommandeViewModel>(true);
             SimpleIoc.Default.Register<PaiementViewModel>(true);
+            SimpleIoc.Default.Register<LivraisonViewModel>();
         }
 
         public MainViewModel Main
@@ -83,7 +84,15 @@ namespace DeliveryIngesup.ViewModel
                 return ServiceLocator.Current.GetInstance<PaiementViewModel>();
             }
         }
-        
+
+        public LivraisonViewModel Livraison
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<LivraisonViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
@@ -96,6 +105,7 @@ namespace DeliveryIngesup.ViewModel
             navigationService.Configure("Inscription", typeof(Inscription));
             navigationService.Configure("Commande", typeof(Commande));
             navigationService.Configure("Paiement", typeof(Paiement));
+            navigationService.Configure("Livraison", typeof(Livraison));
 
             return navigationService;
         }

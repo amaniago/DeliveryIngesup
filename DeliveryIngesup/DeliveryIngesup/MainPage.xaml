@@ -8,7 +8,7 @@
     DataContext="{Binding Main, Mode=TwoWay, Source={StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="250">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="300">
             <TextBlock Text="Email :"/>
             <TextBox Text="{Binding CurrentUser.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBlock Text="Mot de passe :"/>
@@ -16,6 +16,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Content="Connexion" Command="{Binding ConnexionCommand}"/>
                 <Button Content="Inscription" Command="{Binding InscriptionCommand}"/>
+                <CheckBox Content="Livreur" HorizontalAlignment="Left" Margin="0,6,0,0" VerticalAlignment="Top" IsChecked="{Binding IsLivreur, Mode=TwoWay}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

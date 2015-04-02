@@ -23,7 +23,21 @@ namespace DeliveryIngesup.ViewModel
                 RaisePropertyChanged();
             }
         }
-        
+
+        private bool _isLivreur;
+
+        public bool IsLivreur
+        {
+            get { return _isLivreur; }
+            set
+            {
+                _isLivreur = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public Livreur CurrentLivreur { get; set; }
+
         #endregion
 
         #region Commands
@@ -45,17 +59,35 @@ namespace DeliveryIngesup.ViewModel
         private void Connexion()
         {
             //TODO : Check si tous les champs sont remplis
-            CurrentUser = UserManager.Instance.Connexion(CurrentUser.Email, CurrentUser.Password);
-            if (CurrentUser != null)
+            if (IsLivreur)
             {
-                MessengerInstance.Send(CurrentUser);
-                _navigationService.NavigateTo("Commande");
+                //CurrentLivreur = LivreurManager.Instance.Connexion(CurrentUser.Email, CurrentUser.Password);
+                //if (CurrentLivreur != null)
+                //{
+                    MessengerInstance.Send(CurrentLivreur);
+                    _navigationService.NavigateTo("Livraison");
+                //}
+                //else
+                //{
+                //    CurrentLivreur = new Livreur();
+                //    //TODO : Message d'erreur
+                //}
             }
             else
             {
-                CurrentUser = new Utilisateur();
-                //TODO : Message d'erreur
+                CurrentUser = UserManager.Instance.Connexion(CurrentUser.Email, CurrentUser.Password);
+                if (CurrentUser != null)
+                {
+                    MessengerInstance.Send(CurrentUser);
+                    _navigationService.NavigateTo("Commande");
+                }
+                else
+                {
+                    CurrentUser = new Utilisateur();
+                    //TODO : Message d'erreur
+                }
             }
+            
 
         }
         
