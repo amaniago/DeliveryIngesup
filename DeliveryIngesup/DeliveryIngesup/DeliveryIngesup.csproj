@@ -111,8 +111,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Manager\DeliveryManager.cs" />
-    <Compile Include="Manager\IDeliveryManager.cs" />
+    <Compile Include="Manager\CommandeManager.cs" />
+    <Compile Include="Manager\ICommandeManager.cs" />
     <Compile Include="Manager\ILivreurManager.cs" />
     <Compile Include="Manager\IUserManager.cs" />
     <Compile Include="Manager\LivreurManager.cs" />

@@ -81,7 +81,7 @@ namespace DeliveryIngesup.ViewModel
             _navigationService = navigationService;
             CalculPositionUtilisateur();
             MessengerInstance.Register<Livreur>(this, livreur => CurrentLivreur = livreur);
-            ListeCommandes = DeliveryManager.Instance.GetCommandesALivrer();
+            ListeCommandes = CommandeManager.Instance.GetCommandesALivrer();
             ListeCommandesSelectionnees = new ObservableCollection<Commande>();
             ValiderLivraisonCommand = new RelayCommand(ValiderLivraison);
         }

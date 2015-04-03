@@ -10,7 +10,7 @@ using SQLite;
 
 namespace DeliveryIngesup.Manager
 {
-    public class LivreurManager
+    public class LivreurManager : ILivreurManager
     {
         private static LivreurManager _instance;
 

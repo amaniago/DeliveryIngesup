@@ -68,10 +68,10 @@ namespace DeliveryIngesup.ViewModel
         {
             _navigationService = navigationService;
             MessengerInstance.Register<Utilisateur>(this, user => CurrentUser = user);
-            DeliveryManager.Instance.Initialisation();
-            ListeProduits = DeliveryManager.Instance.GetProduits();
-            AjouterProduitCommand = new RelayCommand<int>(param => AjouterArticle(DeliveryManager.Instance.GetProduit(param)));
-            SupprimerProduitCommand = new RelayCommand<int>(param => SupprimerArticle(DeliveryManager.Instance.GetProduit(param)));
+            CommandeManager.Instance.Initialisation();
+            ListeProduits = CommandeManager.Instance.GetProduits();
+            AjouterProduitCommand = new RelayCommand<int>(param => AjouterArticle(CommandeManager.Instance.GetProduit(param)));
+            SupprimerProduitCommand = new RelayCommand<int>(param => SupprimerArticle(CommandeManager.Instance.GetProduit(param)));
             Panier = new ObservableCollection<Produit>();
             ValiderPanierCommand = new RelayCommand(ValiderPanier);
             RetourCommand = new RelayCommand(Retour);

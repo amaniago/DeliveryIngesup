@@ -5,15 +5,15 @@ using SQLite;
 
 namespace DeliveryIngesup.Manager
 {
-    public class DeliveryManager : IDeliveryManager
+    public class CommandeManager : ICommandeManager
     {
-        private static DeliveryManager _instance;
+        private static CommandeManager _instance;
 
-        private DeliveryManager() { }
+        private CommandeManager() { }
 
-        public static DeliveryManager Instance
+        public static CommandeManager Instance
         {
-            get { return _instance ?? (_instance = new DeliveryManager()); }
+            get { return _instance ?? (_instance = new CommandeManager()); }
         }
 
         public async void Initialisation()

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Windows.UI.Popups;
 using DeliveryIngesup.Manager;
 using DeliveryIngesup.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 
 namespace DeliveryIngesup.ViewModel
 {
@@ -89,8 +91,11 @@ namespace DeliveryIngesup.ViewModel
         public ICommand PaiementCommand { get; set; }
         #endregion
 
-        public PaiementViewModel()
+        private readonly INavigationService _navigationService;
+
+        public PaiementViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
             MessengerInstance.Register<Utilisateur>(this, user => CurrentUser = user);
             MessengerInstance.Register<ObservableCollection<Produit>>(this, panier => Panier = panier);
             PaiementCommand = new RelayCommand(Paiement);
@@ -98,14 +103,22 @@ namespace DeliveryIngesup.ViewModel
 
         private void Paiement()
         {
-            if (PaiementManager.IsValidCardNumber(NumeroCarte))
+            if (!String.IsNullOrEmpty(Adresse) && !String.IsNullOrEmpty(CodePostal) && !String.IsNullOrEmpty(Ville) && !String.IsNullOrEmpty(NumeroCarte))
             {
-                DeliveryManager.Instance.CreerCommande(CurrentUser, Panier, Adresse, CodePostal, Ville);
-                //TODO : Message de fin + retour accueil
+                if (PaiementManager.IsValidCardNumber(NumeroCarte))
+                {
+                    CommandeManager.Instance.CreerCommande(CurrentUser, Panier, Adresse, CodePostal, Ville);
+                    new MessageDialog("Paiement validé");
+                    _navigationService.NavigateTo("Main");
+                }
+                else
+                {
+                    new MessageDialog("Informations de paiement non valide");
+                }
             }
             else
             {
-                //TODO : Erreur
+                new MessageDialog("Veuillez remplir tous les champs");
             }
         }
     }

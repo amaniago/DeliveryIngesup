@@ -3,7 +3,7 @@ using DeliveryIngesup.Models;
 
 namespace DeliveryIngesup.Manager
 {
-    interface IDeliveryManager
+    interface ICommandeManager
     {
         ObservableCollection<Produit> GetProduits();
         Produit GetProduit(int id);
