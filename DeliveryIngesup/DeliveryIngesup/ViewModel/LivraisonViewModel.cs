@@ -72,6 +72,7 @@ namespace DeliveryIngesup.ViewModel
 
         #region Commandes
         public ICommand ValiderLivraisonCommand { get; set; }
+        public ICommand RetourCommand { get; set; }
         #endregion
 
         private readonly INavigationService _navigationService;
@@ -84,6 +85,12 @@ namespace DeliveryIngesup.ViewModel
             ListeCommandes = CommandeManager.Instance.GetCommandesALivrer();
             ListeCommandesSelectionnees = new ObservableCollection<Commande>();
             ValiderLivraisonCommand = new RelayCommand(ValiderLivraison);
+            RetourCommand = new RelayCommand(Retour);
+        }
+
+        private void Retour()
+        {
+            _navigationService.NavigateTo("Main");
         }
 
         private void ValiderLivraison()
