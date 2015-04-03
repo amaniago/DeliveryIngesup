@@ -5,8 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:maps="using:Bing.Maps"
-    xmlns:viewModel="using:DeliveryIngesup.ViewModel"
-    xmlns:winRtBehaviors="using:WinRtBehaviors"
     mc:Ignorable="d"
     DataContext="{Binding Livraison, Source={StaticResource Locator}}">
     <Page.Resources>
@@ -33,9 +31,7 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView x:Name="ListView" ItemTemplate="{StaticResource CommandeTemplate}" ItemsSource="{Binding ListeCommandes}" IsSwipeEnabled="False" SelectionMode="Multiple" Margin="0,0,980,0" SelectionChanged="ListView_SelectionChanged">
-            
-        </ListView>
+        <ListView x:Name="ListView" ItemTemplate="{StaticResource CommandeTemplate}" ItemsSource="{Binding ListeCommandes}" IsSwipeEnabled="False" SelectionMode="Multiple" Margin="0,0,980,0" SelectionChanged="ListView_SelectionChanged"/>
         <maps:Map Credentials="AgdAwbVE7MR8KAjhbtQgvA3ZbW76rxkpg4jD7siqcvCMmwEgU4z6HAVX3mniYQP4" x:Name="LivraisonMap" Margin="400,130,30,297"
                   x:FieldModifier="public">
             <maps:Map.Children>
@@ -57,5 +53,8 @@
                 </maps:MapItemsControl>
             </maps:Map.Children>
         </maps:Map>
+        <Button Content="Valider la livraison" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Bottom" Command="{Binding ValiderLivraisonCommand}"/>
+
+
     </Grid>
 </Page>

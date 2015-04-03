@@ -50,7 +50,7 @@ namespace DeliveryIngesup.ViewModel
             SimpleIoc.Default.Register<InscriptionViewModel>(true);
             SimpleIoc.Default.Register<CommandeViewModel>(true);
             SimpleIoc.Default.Register<PaiementViewModel>(true);
-            SimpleIoc.Default.Register<LivraisonViewModel>();
+            SimpleIoc.Default.Register<LivraisonViewModel>(true);
         }
 
         public MainViewModel Main

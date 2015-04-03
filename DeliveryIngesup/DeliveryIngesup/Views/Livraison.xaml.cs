@@ -38,12 +38,16 @@ namespace DeliveryIngesup.Views
             {
                 model.GestionCommandesSelectionnees(selectedItems);
                 model = DataContext as LivraisonViewModel;
-                for (int i = 0; i < model.ListePushPin.Count; i++)
+                LivraisonMap.ShapeLayers.Clear();
+
+                List<PushPinModel> listePushPin = new List<PushPinModel>(MapManager.CalculerTrajet(model.ListePushPin, model.LivreurPosition));
+
+                for (int i = 0; i < listePushPin.Count; i++)
                 {
                     if(i == 0)
-                        TracerRoute(model.LivreurPosition.Coordinate.Latitude, model.LivreurPosition.Coordinate.Longitude, model.ListePushPin[i].Location.Latitude, model.ListePushPin[i].Location.Longitude);
+                        TracerRoute(model.LivreurPosition.Coordinate.Latitude, model.LivreurPosition.Coordinate.Longitude, listePushPin[i].Location.Latitude, listePushPin[i].Location.Longitude);
                     else
-                        TracerRoute(model.LivreurPosition.Coordinate.Latitude, model.LivreurPosition.Coordinate.Longitude, model.ListePushPin[i].Location.Latitude, model.ListePushPin[i].Location.Longitude);
+                        TracerRoute(listePushPin[i - 1].Location.Latitude, listePushPin[i - 1].Location.Longitude, listePushPin[i].Location.Latitude, listePushPin[i].Location.Longitude);
 
                 }
             }

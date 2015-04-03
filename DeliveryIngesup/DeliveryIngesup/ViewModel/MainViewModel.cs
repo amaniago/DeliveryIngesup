@@ -61,17 +61,17 @@ namespace DeliveryIngesup.ViewModel
             //TODO : Check si tous les champs sont remplis
             if (IsLivreur)
             {
-                //CurrentLivreur = LivreurManager.Instance.Connexion(CurrentUser.Email, CurrentUser.Password);
-                //if (CurrentLivreur != null)
-                //{
+                CurrentLivreur = LivreurManager.Instance.Connexion(CurrentUser.Email, CurrentUser.Password);
+                if (CurrentLivreur != null)
+                {
                     MessengerInstance.Send(CurrentLivreur);
                     _navigationService.NavigateTo("Livraison");
-                //}
-                //else
-                //{
-                //    CurrentLivreur = new Livreur();
-                //    //TODO : Message d'erreur
-                //}
+                }
+                else
+                {
+                    CurrentLivreur = new Livreur();
+                    //TODO : Message d'erreur
+                }
             }
             else
             {

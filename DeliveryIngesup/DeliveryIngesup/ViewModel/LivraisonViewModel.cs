@@ -5,10 +5,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.Devices.Geolocation;
 using DeliveryIngesup.Manager;
 using DeliveryIngesup.Models;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 
 namespace DeliveryIngesup.ViewModel
 {
@@ -64,15 +67,28 @@ namespace DeliveryIngesup.ViewModel
                 RaisePropertyChanged();
             }
         }
-
         #endregion
 
-        public LivraisonViewModel()
+        #region Commandes
+        public ICommand ValiderLivraisonCommand { get; set; }
+        #endregion
+
+        private readonly INavigationService _navigationService;
+
+        public LivraisonViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
             CalculPositionUtilisateur();
             MessengerInstance.Register<Livreur>(this, livreur => CurrentLivreur = livreur);
             ListeCommandes = DeliveryManager.Instance.GetCommandesALivrer();
             ListeCommandesSelectionnees = new ObservableCollection<Commande>();
+            ValiderLivraisonCommand = new RelayCommand(ValiderLivraison);
+        }
+
+        private void ValiderLivraison()
+        {
+            LivreurManager.Instance.SaveLivraison(ListeCommandesSelectionnees, CurrentLivreur);
+            _navigationService.NavigateTo("Main"); 
         }
 
 
