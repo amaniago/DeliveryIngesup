@@ -2,7 +2,7 @@
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
-namespace DAL.Models
+namespace DataAccess.Models
 {
     public class Commande
     {

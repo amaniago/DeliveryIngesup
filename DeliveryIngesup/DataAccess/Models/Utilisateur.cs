@@ -1,6 +1,6 @@
 ﻿using SQLite.Net.Attributes;
 
-namespace DAL.Models
+namespace DataAccess.Models
 {
     public class Utilisateur
     {

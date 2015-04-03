@@ -5,10 +5,13 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.Manager;
-using DAL.Models;
+using DataAccess.Models;
+using DeliveryIngesup.Manager;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using SQLite;
+using SQLite.Net;
+using SQLite.Net.Async;
+using SQLite.Net.Platform.WinRT;
 
 namespace DeliveryIngesupTests
 {
@@ -22,7 +25,7 @@ namespace DeliveryIngesupTests
         [ClassInitialize]
         public static async Task Initialize(TestContext context)
         {
-            _connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
+            _connection = new SQLiteAsyncConnection(() => new SQLiteConnectionWithLock(new SQLitePlatformWinRT(), new SQLiteConnectionString("deliveryingesup.bdd", false)));
             _utilisateur = new Utilisateur { Email = "mail@mail.com", Password = "", Nom = "Nom", Prenom = "Prenom" };
             _utilisateur.Password = UserManager.Instance.GetType()
                 .GetTypeInfo()

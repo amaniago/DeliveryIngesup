@@ -2,28 +2,40 @@
 using System.Linq;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
+using Windows.Storage;
 using Windows.Storage.Streams;
-using DAL.Models;
-using SQLite;
+using DataAccess;
+using DataAccess.Models;
+using SQLite.Net;
+using SQLite.Net.Async;
+using SQLite.Net.Platform.WinRT;
 
-namespace DAL.Manager
+namespace DeliveryIngesup.Manager
 {
-    public class UserManager : IUserManager
+    public class UserManager : DeliveryIngesup.Manager.IUserManager
     {
         private static UserManager _instance;
+        private static StorageFile _storage;
 
-        private UserManager() { }
+        private UserManager()
+        {
+            _storage = ApplicationData.Current.LocalFolder.CreateFileAsync("deliveryingesup.bdd", CreationCollisionOption.OpenIfExists).AsTask().Result;
+        }
 
         public static UserManager Instance
         {
             get { return _instance ?? (_instance = new UserManager()); }
         }
 
+        private static SQLiteAsyncConnection Connection
+        {
+            get { return ConnectionHelper.GetConnection(new SQLitePlatformWinRT(), _storage.Path); }
+        }
+
         public async void Initialisation()
         {
-            var connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
             //await connection.DropTableAsync<Utilisateur>();
-            await connection.CreateTableAsync<Utilisateur>();
+            await Connection.CreateTableAsync<Utilisateur>();
             //await connection.InsertAsync(new Utilisateur()
             //{
             //    Email = "test@gmail.com",
@@ -39,11 +51,7 @@ namespace DAL.Manager
 
             try
             {
-                var connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
-
-                Utilisateur user = connection.Table<Utilisateur>().Where(u => u.Email == email && u.Password == password).FirstAsync().Result;
-
-                return user;
+                return Connection.Table<Utilisateur>().Where(u => u.Email == email && u.Password == password).FirstAsync().Result;
             }
             catch (Exception)
             {
@@ -57,13 +65,12 @@ namespace DAL.Manager
             {
                 //TODO : Check password
                 nouvelUtilisateur.Password = ComputeMd5(nouvelUtilisateur.Password);
-                var connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
 
                 int x = 0;
-                if(connection.Table<Utilisateur>().ToListAsync().Result.All(u => u.Email != nouvelUtilisateur.Email))
-                    x = connection.InsertAsync(nouvelUtilisateur).Result;
+                if(Connection.Table<Utilisateur>().ToListAsync().Result.All(u => u.Email != nouvelUtilisateur.Email))
+                    x = Connection.InsertAsync(nouvelUtilisateur).Result;
 
-                return x > 0 ? connection.Table<Utilisateur>().Where(u => u.Email == nouvelUtilisateur.Email).FirstAsync().Result : new Utilisateur();
+                return x > 0 ? Connection.Table<Utilisateur>().Where(u => u.Email == nouvelUtilisateur.Email).FirstAsync().Result : new Utilisateur();
             }
             catch (Exception)
             {

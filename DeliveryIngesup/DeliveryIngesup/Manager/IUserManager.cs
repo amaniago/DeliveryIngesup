@@ -1,6 +1,6 @@
-﻿using DAL.Models;
+﻿using DataAccess.Models;
 
-namespace DAL.Manager
+namespace DeliveryIngesup.Manager
 {
     public interface IUserManager
     {
