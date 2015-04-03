@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using DataAccess.Models;
 
-namespace DeliveryIngesup.Manager
+namespace DataAccess.Manager
 {
     interface IDeliveryManager
     {

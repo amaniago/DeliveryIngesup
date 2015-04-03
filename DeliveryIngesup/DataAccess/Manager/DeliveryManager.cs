@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Windows.Storage;
-using DataAccess;
 using DataAccess.Models;
-using SQLite.Net;
 using SQLite.Net.Async;
-using SQLite.Net.Platform.WinRT;
 
-namespace DeliveryIngesup.Manager
+namespace DataAccess.Manager
 {
     public class DeliveryManager : IDeliveryManager
     {

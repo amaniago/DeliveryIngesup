@@ -4,6 +4,7 @@ using DeliveryIngesup.Manager;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using Model.Models;
 
 namespace DeliveryIngesup.ViewModel
 {

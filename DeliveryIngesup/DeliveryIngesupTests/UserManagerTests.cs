@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
+using DataAccess;
 using DataAccess.Models;
 using DeliveryIngesup.Manager;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
@@ -15,37 +17,43 @@ using SQLite.Net.Platform.WinRT;
 
 namespace DeliveryIngesupTests
 {
+    //FIXME: Déporter dans un projet de test basique (non Windows 8.1)
     [TestClass]
     public class UserManagerTests
     {
-        private static SQLiteAsyncConnection _connection;
         private static Utilisateur _utilisateur;
         private const String Password = "Password";
+        private static StorageFile _storage;
+
+        private static SQLiteAsyncConnection Connection
+        {
+            get { return ConnectionHelper.GetConnection(new SQLitePlatformWinRT(), _storage.Path); }
+        }
 
         [ClassInitialize]
         public static async Task Initialize(TestContext context)
         {
-            _connection = new SQLiteAsyncConnection(() => new SQLiteConnectionWithLock(new SQLitePlatformWinRT(), new SQLiteConnectionString("deliveryingesup.bdd", false)));
+            _storage = ApplicationData.Current.LocalFolder.CreateFileAsync("deliveryingesup.bdd", CreationCollisionOption.OpenIfExists).AsTask().Result;
             _utilisateur = new Utilisateur { Email = "mail@mail.com", Password = "", Nom = "Nom", Prenom = "Prenom" };
             _utilisateur.Password = UserManager.Instance.GetType()
                 .GetTypeInfo()
                 .GetDeclaredMethod("ComputeMd5")
                 .Invoke(UserManager.Instance, new object[] { Password }) as string;
-           
-            await _connection.CreateTableAsync<Utilisateur>();
+
+            await Connection.CreateTableAsync<Utilisateur>();
         }
 
         [ClassCleanup]
         public static async Task CleanUp()
         {
-            await _connection.DeleteAsync(_utilisateur);
+            await Connection.DeleteAsync(_utilisateur);
         }
 
         [TestMethod]
         public async Task TestConnexion()
         {
-            if (await _connection.Table<Utilisateur>().Where(u => u.Email == _utilisateur.Email).CountAsync() == 0)
-                await _connection.InsertAsync(_utilisateur);
+            if (await Connection.Table<Utilisateur>().Where(u => u.Email == _utilisateur.Email).CountAsync() == 0)
+                await Connection.InsertAsync(_utilisateur);
 
             var connectedUser = UserManager.Instance.Connexion(_utilisateur.Email, Password);
 
@@ -60,10 +68,10 @@ namespace DeliveryIngesupTests
         [TestMethod]
         public async Task TestInscription()
         {
-            await _connection.CreateTableAsync<Utilisateur>();
+            await Connection.CreateTableAsync<Utilisateur>();
             UserManager.Instance.Inscription(_utilisateur, Password);
 
-            Assert.IsTrue(await _connection.Table<Utilisateur>().Where(u => _utilisateur.Email == u.Email).CountAsync() > 0);
+            Assert.IsTrue(await Connection.Table<Utilisateur>().Where(u => _utilisateur.Email == u.Email).CountAsync() > 0);
         }
     }
 }

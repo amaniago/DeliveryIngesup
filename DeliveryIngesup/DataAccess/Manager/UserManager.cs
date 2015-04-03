@@ -1,35 +1,31 @@
 ﻿using System;
 using System.Linq;
-using Windows.Security.Cryptography;
-using Windows.Security.Cryptography.Core;
-using Windows.Storage;
-using Windows.Storage.Streams;
-using DataAccess;
 using DataAccess.Models;
-using SQLite.Net;
 using SQLite.Net.Async;
-using SQLite.Net.Platform.WinRT;
+using SQLite.Net.Interop;
 
-namespace DeliveryIngesup.Manager
+namespace DataAccess.Manager
 {
-    public class UserManager : DeliveryIngesup.Manager.IUserManager
+    public class UserManager : IUserManager
     {
         private static UserManager _instance;
-        private static StorageFile _storage;
+        private static ISQLitePlatform _platform;
+        private static string _path;
 
-        private UserManager()
+        private UserManager(ISQLitePlatform platform, string path)
         {
-            _storage = ApplicationData.Current.LocalFolder.CreateFileAsync("deliveryingesup.bdd", CreationCollisionOption.OpenIfExists).AsTask().Result;
+            _platform = platform;
+            _path = path;
         }
 
-        public static UserManager Instance
+        public static UserManager Instance(ISQLitePlatform platform, string path)
         {
-            get { return _instance ?? (_instance = new UserManager()); }
+            return _instance ?? (_instance = new UserManager(platform, path)); 
         }
 
         private static SQLiteAsyncConnection Connection
         {
-            get { return ConnectionHelper.GetConnection(new SQLitePlatformWinRT(), _storage.Path); }
+            get { return ConnectionHelper.GetConnection(_platform, _path); }
         }
 
         public async void Initialisation()

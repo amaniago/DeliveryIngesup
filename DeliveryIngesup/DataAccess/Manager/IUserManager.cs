@@ -1,6 +1,6 @@
 ﻿using DataAccess.Models;
 
-namespace DeliveryIngesup.Manager
+namespace DataAccess.Manager
 {
     public interface IUserManager
     {

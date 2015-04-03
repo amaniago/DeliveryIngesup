@@ -2,11 +2,13 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using DAL.Manager;
 using DataAccess.Models;
 using DeliveryIngesup.Manager;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using Model.Models;
 
 namespace DeliveryIngesup.ViewModel
 {
@@ -63,7 +65,7 @@ namespace DeliveryIngesup.ViewModel
         {
             _navigationService = navigationService;
             MessengerInstance.Register<Utilisateur>(this, user => CurrentUser = user);
-            DeliveryManager.Instance.Initialisation();
+            DeliveryManager.Instance().Initialisation();
             ListeProduits = DeliveryManager.Instance.GetProduits();
             AjouterProduitCommand = new RelayCommand<int>(param => AjouterArticle(DeliveryManager.Instance.GetProduit(param)));
             SupprimerProduitCommand = new RelayCommand<int>(param => SupprimerArticle(DeliveryManager.Instance.GetProduit(param)));
