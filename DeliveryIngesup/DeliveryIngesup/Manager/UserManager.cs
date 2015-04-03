@@ -3,6 +3,7 @@ using System.Linq;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
+using Windows.UI.Popups;
 using DeliveryIngesup.Models;
 using SQLite;
 
@@ -55,7 +56,6 @@ namespace DeliveryIngesup.Manager
         {
             try
             {
-                //TODO : Check password
                 nouvelUtilisateur.Password = ComputeMd5(nouvelUtilisateur.Password);
                 var connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
 

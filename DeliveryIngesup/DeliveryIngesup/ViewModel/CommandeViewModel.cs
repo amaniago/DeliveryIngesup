@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Windows.Input;
 using Windows.ApplicationModel.Store;
+using Windows.UI.Popups;
 using DeliveryIngesup.Manager;
 using DeliveryIngesup.Models;
 using GalaSoft.MvvmLight;
@@ -50,7 +51,7 @@ namespace DeliveryIngesup.ViewModel
                 RaisePropertyChanged();
             }
         }
-        
+
         #endregion
 
         #region Commands
@@ -58,6 +59,8 @@ namespace DeliveryIngesup.ViewModel
         public ICommand AjouterProduitCommand { get; set; }
         public ICommand SupprimerProduitCommand { get; set; }
         public ICommand ValiderPanierCommand { get; set; }
+        public ICommand RetourCommand { get; set; }
+
         #endregion
 
         private readonly INavigationService _navigationService;
@@ -71,6 +74,12 @@ namespace DeliveryIngesup.ViewModel
             SupprimerProduitCommand = new RelayCommand<int>(param => SupprimerArticle(DeliveryManager.Instance.GetProduit(param)));
             Panier = new ObservableCollection<Produit>();
             ValiderPanierCommand = new RelayCommand(ValiderPanier);
+            RetourCommand = new RelayCommand(Retour);
+        }
+
+        private void Retour()
+        {
+            _navigationService.NavigateTo("Main");
         }
 
         private void AjouterArticle(Produit produit)
@@ -81,7 +90,7 @@ namespace DeliveryIngesup.ViewModel
 
             if (produitExistant == null)
             {
-                produit.Quantite ++;
+                produit.Quantite++;
                 panierTemp.Add(produit);
             }
             else
@@ -94,14 +103,7 @@ namespace DeliveryIngesup.ViewModel
 
         private void SupprimerArticle(Produit produit)
         {
-            try
-            {
-                Panier.Remove(Panier.FirstOrDefault(p => p.IdProduit == produit.IdProduit));
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
+            Panier.Remove(Panier.FirstOrDefault(p => p.IdProduit == produit.IdProduit));
         }
 
         private void ValiderPanier()
@@ -113,7 +115,7 @@ namespace DeliveryIngesup.ViewModel
             }
             else
             {
-                //TODO : Message d'erreur
+                new MessageDialog("Panier vide").ShowAsync();
             }
         }
     }

@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Devices.Geolocation;
+using Windows.UI.Popups;
 using DeliveryIngesup.Manager;
 using DeliveryIngesup.Models;
 using GalaSoft.MvvmLight;
@@ -87,8 +88,16 @@ namespace DeliveryIngesup.ViewModel
 
         private void ValiderLivraison()
         {
-            LivreurManager.Instance.SaveLivraison(ListeCommandesSelectionnees, CurrentLivreur);
-            _navigationService.NavigateTo("Main"); 
+            if (ListeCommandesSelectionnees.Count > 0)
+            {
+                LivreurManager.Instance.SaveLivraison(ListeCommandesSelectionnees, CurrentLivreur);
+                new MessageDialog("Vous pouvez y allez !").ShowAsync();
+                _navigationService.NavigateTo("Main"); 
+            }
+            else
+            {
+                new MessageDialog("Aucun élement selectionné").ShowAsync();
+            }
         }
 
 

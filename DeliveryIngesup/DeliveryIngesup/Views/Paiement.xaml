@@ -29,11 +29,17 @@
         </DataTemplate>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView ItemTemplate="{StaticResource PanierTemplate}" HorizontalAlignment="Left" Height="335" VerticalAlignment="Top" Width="270" ItemsSource="{Binding Panier, Mode=TwoWay}" Margin="10,10,0,0"/>
-        <TextBox HorizontalAlignment="Left" Margin="10,385,0,0" TextWrapping="Wrap" PlaceholderText="Adresse" Text="{Binding Adresse, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="16" VerticalAlignment="Top" Width="222" AcceptsReturn="False"/>
-        <TextBox HorizontalAlignment="Left" Margin="10,422,0,0" TextWrapping="Wrap" PlaceholderText="Code Postal" Text="{Binding CodePostal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="16" VerticalAlignment="Top" Width="222" AcceptsReturn="False"/>
-        <TextBox HorizontalAlignment="Left" Margin="10,459,0,0" TextWrapping="Wrap" PlaceholderText="Ville" Text="{Binding Ville, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="16" VerticalAlignment="Top" Width="222" AcceptsReturn="False"/>
-        <TextBox HorizontalAlignment="Left" Margin="10,496,0,0" TextWrapping="Wrap" PlaceholderText="Numéro de carte" Text="{Binding NumeroCarte, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="16" VerticalAlignment="Top" Width="222" AcceptsReturn="False"/>
-        <Button Content="Confirmer" Command="{Binding PaiementCommand}" Margin="7,530,0,200"></Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" ItemTemplate="{StaticResource PanierTemplate}" HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding Panier, Mode=TwoWay}" Margin="10,10,10,10"/>
+        <StackPanel Grid.Column="1" HorizontalAlignment="Right" MinWidth="250">
+            <TextBox HorizontalAlignment="Left" Width="230" Margin="10,10,0,10" TextWrapping="Wrap" PlaceholderText="Adresse" Text="{Binding Adresse, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" AcceptsReturn="False"/>
+            <TextBox HorizontalAlignment="Left" Width="230" Margin="10,10,0,10" TextWrapping="Wrap" PlaceholderText="Code Postal" Text="{Binding CodePostal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="5" VerticalAlignment="Top" AcceptsReturn="False"/>
+            <TextBox HorizontalAlignment="Left" Width="230" Margin="10,10,0,10" TextWrapping="Wrap" PlaceholderText="Ville" Text="{Binding Ville, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" AcceptsReturn="False"/>
+            <TextBox HorizontalAlignment="Left" Width="230" Margin="10,10,0,10" TextWrapping="Wrap" PlaceholderText="Numéro de carte" Text="{Binding NumeroCarte, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MaxLength="16" VerticalAlignment="Top" AcceptsReturn="False"/>
+            <Button Content="Confirmer" Command="{Binding PaiementCommand}" Margin="10, 10, 0, 0"></Button>
+        </StackPanel>
     </Grid>
 </Page>

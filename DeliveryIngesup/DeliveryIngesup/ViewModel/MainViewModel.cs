@@ -1,5 +1,7 @@
+using System;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
-using System.Xml.Linq;
+using Windows.UI.Popups;
 using DeliveryIngesup.Manager;
 using DeliveryIngesup.Models;
 using GalaSoft.MvvmLight;
@@ -8,7 +10,7 @@ using GalaSoft.MvvmLight.Views;
 
 namespace DeliveryIngesup.ViewModel
 {
-    
+
     public class MainViewModel : ViewModelBase
     {
         #region Properties
@@ -58,39 +60,52 @@ namespace DeliveryIngesup.ViewModel
 
         private void Connexion()
         {
-            //TODO : Check si tous les champs sont remplis
-            if (IsLivreur)
+            if (!String.IsNullOrEmpty(CurrentUser.Email) && !String.IsNullOrEmpty(CurrentUser.Password))
             {
-                CurrentLivreur = LivreurManager.Instance.Connexion(CurrentUser.Email, CurrentUser.Password);
-                if (CurrentLivreur != null)
+                Regex regex = new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+
+                if (regex.IsMatch(CurrentUser.Email))
                 {
-                    MessengerInstance.Send(CurrentLivreur);
-                    _navigationService.NavigateTo("Livraison");
+                    if (IsLivreur)
+                    {
+                        CurrentLivreur = LivreurManager.Instance.Connexion(CurrentUser.Email, CurrentUser.Password);
+                        if (CurrentLivreur != null)
+                        {
+                            MessengerInstance.Send(CurrentLivreur);
+                            _navigationService.NavigateTo("Livraison");
+                        }
+                        else
+                        {
+                            CurrentLivreur = new Livreur();
+                            new MessageDialog("Erreur d'authenficiation").ShowAsync();
+                        }
+                    }
+                    else
+                    {
+                        CurrentUser = UserManager.Instance.Connexion(CurrentUser.Email, CurrentUser.Password);
+                        if (CurrentUser != null)
+                        {
+                            MessengerInstance.Send(CurrentUser);
+                            _navigationService.NavigateTo("Commande");
+                        }
+                        else
+                        {
+                            CurrentUser = new Utilisateur();
+                            new MessageDialog("Erreur d'authenficiation").ShowAsync();
+                        }
+                    }
                 }
                 else
                 {
-                    CurrentLivreur = new Livreur();
-                    //TODO : Message d'erreur
+                    new MessageDialog("Email invalide").ShowAsync();
                 }
             }
             else
             {
-                CurrentUser = UserManager.Instance.Connexion(CurrentUser.Email, CurrentUser.Password);
-                if (CurrentUser != null)
-                {
-                    MessengerInstance.Send(CurrentUser);
-                    _navigationService.NavigateTo("Commande");
-                }
-                else
-                {
-                    CurrentUser = new Utilisateur();
-                    //TODO : Message d'erreur
-                }
+                new MessageDialog("Veuillez remplir tous les champs").ShowAsync();
             }
-            
-
         }
-        
+
         private void Inscription()
         {
             _navigationService.NavigateTo("Inscription");

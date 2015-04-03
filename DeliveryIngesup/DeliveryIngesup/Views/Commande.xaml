@@ -7,6 +7,25 @@
     mc:Ignorable="d"
     DataContext="{Binding Commande, Source={StaticResource Locator}}">
     <Page.Resources>
+        <DataTemplate  x:Key="HeaderProduitsTemplate" >
+            <Grid Height="36" Background="DarkGray" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="PRODUITS" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+        
+        <DataTemplate  x:Key="HeaderPanierTemplate" >
+            <Grid Height="36" Background="DarkGray" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="VOTRE PANIER" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+        
+        
         <DataTemplate x:Key="ProduitTemplate">
             <Grid>
                 <Grid.RowDefinitions>
@@ -52,10 +71,17 @@
         </DataTemplate>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView ItemTemplate="{StaticResource ProduitTemplate}" HorizontalAlignment="Left" Height="748" Margin="10,10,0,0" VerticalAlignment="Top" Width="1068" ItemsSource="{Binding ListeProduits, Mode=TwoWay}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" HeaderTemplate="{StaticResource HeaderProduitsTemplate}" ItemTemplate="{StaticResource ProduitTemplate}" Margin="10,10,0,0" VerticalAlignment="Top" Width="1068" ItemsSource="{Binding ListeProduits, Mode=TwoWay}">
         </ListView>
-        <ListView ItemTemplate="{StaticResource PanierTemplate}" HorizontalAlignment="Left" Height="335" Margin="1086,10,0,0" VerticalAlignment="Top" Width="270" ItemsSource="{Binding Panier, Mode=TwoWay}">
+        <ListView Grid.Column="1" HeaderTemplate="{StaticResource HeaderPanierTemplate}" ItemTemplate="{StaticResource PanierTemplate}" Margin="10,10,0,0" VerticalAlignment="Top" Width="270" ItemsSource="{Binding Panier, Mode=TwoWay}">
         </ListView>
-        <Button Content="Valider la commande" Command="{Binding ValiderPanierCommand}" Margin="1176,347,0,383"></Button>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Annuler" HorizontalAlignment="Center" VerticalAlignment="Bottom" Command="{Binding RetourCommand}" Margin="10,10,10,10"></Button>
+            <Button Content="Valider la commande" HorizontalAlignment="Center" VerticalAlignment="Bottom" Command="{Binding ValiderPanierCommand}" Margin="10,10,10,10"></Button>
+        </StackPanel>
     </Grid>
 </Page>

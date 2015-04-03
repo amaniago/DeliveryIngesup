@@ -1,4 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Text.RegularExpressions;
+using System.Windows.Input;
+using Windows.UI.Popups;
 using DeliveryIngesup.Manager;
 using DeliveryIngesup.Models;
 using GalaSoft.MvvmLight;
@@ -38,6 +41,7 @@ namespace DeliveryIngesup.ViewModel
 
         #region Commands
         public ICommand InscriptionCommand { get; set; }
+        public ICommand RetourCommand { get; set; }
         #endregion
 
         private readonly INavigationService _navigationService;
@@ -47,12 +51,34 @@ namespace DeliveryIngesup.ViewModel
             _navigationService = navigationService;
             NouvelUtilisateur = new Utilisateur();
             InscriptionCommand = new RelayCommand(Inscription);
+            RetourCommand = new RelayCommand(Retour);
+        }
+
+        private void Retour()
+        {
+            _navigationService.NavigateTo("Main");
         }
 
         private void Inscription()
         {
-            NouvelUtilisateur = UserManager.Instance.Inscription(NouvelUtilisateur, CheckPassword);
-            _navigationService.NavigateTo("Main");             
+            if (!String.IsNullOrEmpty(NouvelUtilisateur.Email) && !String.IsNullOrEmpty(NouvelUtilisateur.Password) && !String.IsNullOrEmpty(NouvelUtilisateur.Nom) && !String.IsNullOrEmpty(NouvelUtilisateur.Prenom))
+            {
+                Regex regex = new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+
+                if (regex.IsMatch(NouvelUtilisateur.Email))
+                {
+                    NouvelUtilisateur = UserManager.Instance.Inscription(NouvelUtilisateur, CheckPassword);
+                    _navigationService.NavigateTo("Main");
+                }
+                else
+                {
+                    new MessageDialog("Email invalide").ShowAsync();
+                }
+            }
+            else
+            {
+                new MessageDialog("Veuillez remplir tous les champs").ShowAsync();
+            }
         }
     }
 }

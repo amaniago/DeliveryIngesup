@@ -8,12 +8,21 @@
     mc:Ignorable="d"
     DataContext="{Binding Livraison, Source={StaticResource Locator}}">
     <Page.Resources>
+        <DataTemplate  x:Key="HeaderTemplate" >
+            <Grid Height="36" Background="DarkGray" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="COMMANDES EN ATTENTE" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+        
         <DataTemplate x:Key="CommandeTemplate">
             <Grid Height="110" Width="480" Margin="10" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Margin="10,0,0,0">
+                <StackPanel Grid.Column="0">
                     <TextBlock Style="{StaticResource TitleTextBlockStyle}">
                         <Run Text="Commande N°"></Run>
                         <Run Text="{Binding IdCommande}"></Run>
@@ -31,30 +40,34 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView x:Name="ListView" ItemTemplate="{StaticResource CommandeTemplate}" ItemsSource="{Binding ListeCommandes}" IsSwipeEnabled="False" SelectionMode="Multiple" Margin="0,0,980,0" SelectionChanged="ListView_SelectionChanged"/>
-        <maps:Map Credentials="AgdAwbVE7MR8KAjhbtQgvA3ZbW76rxkpg4jD7siqcvCMmwEgU4z6HAVX3mniYQP4" x:Name="LivraisonMap" Margin="400,130,30,297"
-                  x:FieldModifier="public">
-            <maps:Map.Children>
-                <maps:Pushpin x:Name="StationPin" Background="Red" Text="L">
-                    <maps:MapLayer.Position>
-                        <maps:Location Latitude="{Binding LivreurPosition.Coordinate.Latitude}" Longitude="{Binding LivreurPosition.Coordinate.Longitude}"/>
-                    </maps:MapLayer.Position>
-                </maps:Pushpin>
-                <maps:MapItemsControl Name="StoresMapItemsControl" ItemsSource="{Binding ListePushPin}">
-                    <maps:MapItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <maps:Pushpin x:Name="StationPin" Background="GreenYellow">
-                                <maps:MapLayer.Position>
-                                    <maps:Location Latitude="{Binding Location.Latitude}" Longitude="{Binding Location.Longitude}" />
-                                </maps:MapLayer.Position>
-                            </maps:Pushpin>
-                        </DataTemplate>
-                    </maps:MapItemsControl.ItemTemplate>
-                </maps:MapItemsControl>
-            </maps:Map.Children>
-        </maps:Map>
-        <Button Content="Valider la livraison" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Bottom" Command="{Binding ValiderLivraisonCommand}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
+        <ListView Margin="10,10,10,10" x:Name="ListView" HeaderTemplate="{StaticResource HeaderTemplate}" Grid.Column="0" ItemTemplate="{StaticResource CommandeTemplate}" ItemsSource="{Binding ListeCommandes}" IsSwipeEnabled="False" SelectionMode="Multiple" SelectionChanged="ListView_SelectionChanged"/>
+            <maps:Map Credentials="AgdAwbVE7MR8KAjhbtQgvA3ZbW76rxkpg4jD7siqcvCMmwEgU4z6HAVX3mniYQP4" x:Name="LivraisonMap" x:FieldModifier="public" Grid.Column="1" Margin="10,10,10,10">
+                <maps:Map.Children>
+                    <maps:Pushpin Background="Red" Text="L">
+                        <maps:MapLayer.Position>
+                            <maps:Location Latitude="{Binding LivreurPosition.Coordinate.Latitude}" Longitude="{Binding LivreurPosition.Coordinate.Longitude}"/>
+                        </maps:MapLayer.Position>
+                    </maps:Pushpin>
+                    <maps:MapItemsControl ItemsSource="{Binding ListePushPin}">
+                        <maps:MapItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <maps:Pushpin x:Name="StationPin" Background="GreenYellow">
+                                    <maps:MapLayer.Position>
+                                        <maps:Location Latitude="{Binding Location.Latitude}" Longitude="{Binding Location.Longitude}" />
+                                    </maps:MapLayer.Position>
+                                </maps:Pushpin>
+                            </DataTemplate>
+                        </maps:MapItemsControl.ItemTemplate>
+                    </maps:MapItemsControl>
+                </maps:Map.Children>
+            </maps:Map>
+            <Button Content="Valider la livraison" Grid.Column="0" HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Bottom" Command="{Binding ValiderLivraisonCommand}"/>
+       
 
     </Grid>
 </Page>

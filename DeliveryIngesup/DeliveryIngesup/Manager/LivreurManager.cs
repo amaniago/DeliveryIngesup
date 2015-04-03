@@ -4,6 +4,7 @@ using System.Linq;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
+using Windows.UI.Popups;
 using DeliveryIngesup.Models;
 using SQLite;
 
@@ -22,7 +23,7 @@ namespace DeliveryIngesup.Manager
 
 
 
-        public Livreur Connexion(string nom, string password)
+        public Livreur Connexion(string email, string password)
         {
 
             password = ComputeMd5(password);
@@ -31,13 +32,14 @@ namespace DeliveryIngesup.Manager
             {
                 var connection = new SQLiteAsyncConnection("deliveryingesup.bdd");
 
-                //var var = connection.InsertAsync(new Livreur() {Nom = "Georges", Password = password}).Result;
+                //connection.CreateTableAsync<Livreur>();
+                //var var = connection.InsertAsync(new Livreur() {Email = email, Password = password}).Result;
 
-                Livreur user = connection.Table<Livreur>().Where(l => l.Nom == nom && l.Password == password).FirstAsync().Result;
+                Livreur user = connection.Table<Livreur>().Where(l => l.Email == email && l.Password == password).FirstAsync().Result;
 
                 return user;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return new Livreur();
             }
